@@ -1,0 +1,17 @@
+{
+  "name": "authentication",
+  "version": "1.0.0",
+  "description": "Authentication Microservice",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/mongodb": "^8.0.0",
+    "fastify": "^4.24.3",
+    "fastify-plugin": "^4.5.1"
+  }
+}
