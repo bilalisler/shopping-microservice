@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fastify/jwt": "^7.2.2",
     "@fastify/mongodb": "^8.0.0",
     "fastify": "^4.24.3",
     "fastify-plugin": "^4.5.1"

@@ -1,10 +1,10 @@
-class UserController {
-    constructor(method1, method2) {
-        this.method1 = method1;
-        this.method2= method2;
-    }
+export default class UserController {
+    // constructor(method1, method2) {
+    //     this.method1 = method1;
+    //     this.method2= method2;
+    // }
 
-     async findUser(request, reply){
+     async me(request, reply){
         console.log('im here')
     }
 }

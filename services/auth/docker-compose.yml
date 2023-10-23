@@ -10,7 +10,7 @@ services:
 #      MONGO_INITDB_ROOT_USERNAME: admin
 #      MONGO_INITDB_ROOT_PASSWORD: pass
     volumes:
-      - ./docker/mongo/init.js:/docker-entrypoint-initdb.d/mongo-init.js
+      - ./database/migrations/:/docker-entrypoint-initdb.d/
 
   mongo-express:
     image: mongo-express
