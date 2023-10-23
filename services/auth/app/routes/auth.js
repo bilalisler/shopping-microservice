@@ -8,7 +8,7 @@ export default async function routes(fastify, options) {
 
     fastify.post('/signup', SignUpRequest, authController.signUp)
 
-    fastify.post('/refresh', authController.refresh)
+    fastify.post('/refresh', options, authController.refresh)
 
-    fastify.post('/verify', authController.verify)
+    fastify.post('/verify', options, authController.verify)
 }

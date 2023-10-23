@@ -2,9 +2,10 @@ export default {
     schema: {
         body: {
             type: 'object',
-            required: ['animal'],
+            required: ['email','password'],
             properties: {
-                animal: {type: 'string'},
+                email: {type: 'string'},
+                password: {type: 'string'},
             },
         },
     }

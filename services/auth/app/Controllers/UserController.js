@@ -5,6 +5,8 @@ export default class UserController {
     // }
 
      async me(request, reply){
-        console.log('im here')
+         console.log('request:',request.user)
+
+         reply.send({hello: 'world2'})
     }
 }
