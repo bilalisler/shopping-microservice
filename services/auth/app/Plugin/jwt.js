@@ -1,6 +1,7 @@
 import fastifyPlugin from 'fastify-plugin'
 import fastifyJwt from "@fastify/jwt";
-async function jwt (fastify, options) {
+
+export const jwt = async (fastify, options) => {
     fastify.register(fastifyJwt, {
         secret: "supersecret"
     })

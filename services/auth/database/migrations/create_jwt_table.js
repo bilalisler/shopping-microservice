@@ -1,6 +1,6 @@
 db = db.getSiblingDB('auth_db');
 
-db.createCollection('jwt');
+db.createCollection('access_tokens');
 
 db.jwt.insertMany([
     {

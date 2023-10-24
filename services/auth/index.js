@@ -1,18 +1,22 @@
 import Fastify from 'fastify'
-import {userRoute, authRoute} from './app/routes/index.js'
+import {userRoute, authRoute} from './app/Routes/index.js'
 import database from './database/database.js'
-import jwt from './jwt.js'
-import {middleware as preValidation} from "./app/Middleware/authMiddleware.js";
+import jwtModule from './app/Plugin/jwt.js'
+import {preValidation, onError} from "./app/Hooks/index.js";
 
 const fastify = Fastify({
     logger: false
 })
 
-fastify.register(database)
-fastify.register(jwt)
-
+fastify.addHook('onError', onError)
+fastify.register(jwtModule)
 fastify.register(userRoute, {prefix: '/user', preValidation})
 fastify.register(authRoute, {prefix: '/auth', preValidation})
+
+fastify.ready().then(() => {
+    database()
+})
+
 fastify.listen({port: 3000}, function (err, address) {
     if (err) {
         fastify.log.error(err)
