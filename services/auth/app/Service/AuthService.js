@@ -1,7 +1,7 @@
 import AuthRepository from "../Repositry/AuthRepository.js";
 import NotFoundException from "../Exceptions/NotFoundException.js";
 import InvalidPasswordException from "../Exceptions/InvalidPasswordException.js";
-import bcrypt from "bcryptjs";
+import {comparePassword} from "../Utils/Bcrypt.js";
 
 export default class AuthService {
     constructor() {
@@ -15,21 +15,11 @@ export default class AuthService {
             throw new NotFoundException('User was not found')
         }
 
-        const isMatch = await this.comparePassword(password, user.password)
+        const isMatch = await comparePassword(password, user.password)
         if (!isMatch) {
             throw new InvalidPasswordException('Password is invalid')
         }
 
         return user
-    }
-
-    async generateHashPassword(password) {
-        const salt = await bcrypt.genSalt(10);
-
-        return await bcrypt.hash(password, salt);
-    }
-
-    async comparePassword(password, hashedPassword) {
-        return await bcrypt.compare(password, hashedPassword)
     }
 }

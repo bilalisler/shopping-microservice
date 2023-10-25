@@ -1,7 +1,9 @@
-import {middleware} from "./middleware.js";
-import {error} from "./error.js";
+import {middleware} from "./Middleware.js";
+import {error} from "./Error.js";
+import {send} from "./Send.js";
 
 export {
     middleware as preValidation,
-    error as onError
+    error as onError,
+    send as OnSend
 }
