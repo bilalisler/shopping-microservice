@@ -1,0 +1,56 @@
+version: '3.1'
+
+services:
+  mongo:
+    image: mongo
+    restart:
+      on-failure
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./migrations/:/docker-entrypoint-initdb.d/
+      - ./docker/mongo_data:/data/db
+
+  mongo-express:
+    image: mongo-express
+    restart:
+      on-failure
+    depends_on:
+      - mongo
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: express
+      ME_CONFIG_BASICAUTH_PASSWORD: 123456
+      ME_CONFIG_MONGODB_URL: mongodb://mongo:27017/
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart:
+      on-failure
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ./docker/rabbitmq_data:/data
+
+  app:
+    image: auth/app
+    build:
+      dockerfile: ./Dockerfile
+    depends_on:
+      - mongo
+      - rabbitmq
+    restart:
+      on-failure
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:3000" ]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  node_modules:
