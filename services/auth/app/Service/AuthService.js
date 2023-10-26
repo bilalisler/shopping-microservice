@@ -1,15 +1,15 @@
-import AuthRepository from "../Repository/AuthRepository.js";
+import UserRepository from "../Repository/UserRepository.js";
 import NotFoundException from "../Exceptions/NotFoundException.js";
 import InvalidPasswordException from "../Exceptions/InvalidPasswordException.js";
 import {comparePassword} from "../Utils/Bcrypt.js";
 
 export default class AuthService {
     constructor() {
-        this.authRepository = new AuthRepository()
+        this.userRepository = new UserRepository()
     }
 
     async checkCredentials(email, password) {
-        let user = await this.authRepository.getUser(email)
+        let user = await this.userRepository.getUser(email)
 
         if (user === null) {
             throw new NotFoundException('User was not found')
