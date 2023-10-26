@@ -1,4 +1,4 @@
-import AuthRepository from "../Repositry/AuthRepository.js";
+import AuthRepository from "../Repository/AuthRepository.js";
 import {generateHashPassword} from "../Utils/Bcrypt.js";
 
 

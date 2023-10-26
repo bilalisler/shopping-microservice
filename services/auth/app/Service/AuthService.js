@@ -1,4 +1,4 @@
-import AuthRepository from "../Repositry/AuthRepository.js";
+import AuthRepository from "../Repository/AuthRepository.js";
 import NotFoundException from "../Exceptions/NotFoundException.js";
 import InvalidPasswordException from "../Exceptions/InvalidPasswordException.js";
 import {comparePassword} from "../Utils/Bcrypt.js";
