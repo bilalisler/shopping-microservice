@@ -11,6 +11,6 @@ then
         docker-compose -f ./docker-compose.prod.yml --env-file .env.prod up -d --force-recreate --build
 else
          echo "Run Docker Compose For Development"
-        docker-compose -f ./docker-compose.prod.yml --env-file .env up -d --force-recreate --build
+        docker-compose -f ./docker-compose.dev.yml --env-file .env up -d --force-recreate --build
 fi
 
