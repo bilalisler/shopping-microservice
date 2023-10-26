@@ -6,7 +6,7 @@ services:
     restart:
       on-failure
     ports:
-      - "27017:27017"
+      - "${MONGO_PORT}:27017"
     volumes:
       - ./migrations/:/docker-entrypoint-initdb.d/
       - ./docker/mongo_data:/data/db
@@ -18,7 +18,7 @@ services:
     depends_on:
       - mongo
     ports:
-      - "8081:8081"
+      - "${MONGO_UI_PORT}:8081"
     environment:
       ME_CONFIG_BASICAUTH_USERNAME: express
       ME_CONFIG_BASICAUTH_PASSWORD: 123456
@@ -29,8 +29,8 @@ services:
     restart:
       on-failure
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - "${RABBITMQ_PORT}:5672"
+      - "${RABBITMQ_UI_PORT}:15672"
     volumes:
       - ./docker/rabbitmq_data:/data
 
@@ -44,9 +44,9 @@ services:
     restart:
       on-failure
     ports:
-      - "3000:3000"
+      - "${APP_PORT}:3000"
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:3000" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:${APP_PORT}" ]
       interval: 1m30s
       timeout: 10s
       retries: 3

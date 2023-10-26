@@ -23,7 +23,7 @@ fastify.ready().then(() => {
     database()
 })
 
-fastify.listen({host: process.env.ADDRESS, port: process.env.PORT}, function (err, address) {
+fastify.listen({host: process.env.APP_ADDRESS, port: process.env.APP_PORT}, function (err, address) {
     if (err) {
         fastify.log.error(err)
         process.exit(1)
