@@ -1,5 +1,6 @@
 import AuthService from "../Service/AuthService.js";
 import UserService from "../Service/UserService.js";
+import CreatedUserPublisher from "../Events/Publisher/CreatedUserPublisher.js";
 
 export default class AuthController {
     constructor() {
@@ -20,7 +21,9 @@ export default class AuthController {
     async signUp(request, reply) {
         const payload = request.body
 
-        await this.userService.createUser(payload)
+        const user = await this.userService.createUser(payload)
+
+        new CreatedUserPublisher(user)
 
         return reply.send({
             message: 'User was created successfully'
