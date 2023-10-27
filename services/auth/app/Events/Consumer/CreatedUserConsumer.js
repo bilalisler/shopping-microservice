@@ -1,8 +1,10 @@
 import BaseConsumer from "../BaseConsumer.js";
 
 export default class CreatedUserConsumer extends BaseConsumer {
+    queue = 'created.user'
+
     constructor() {
-        super('created.user')
+        super()
     }
 
     handler(msg, channel) {

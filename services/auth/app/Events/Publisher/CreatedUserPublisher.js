@@ -1,9 +1,9 @@
 import BasePublisher from "../BasePublisher.js";
 
 export default class CreatedUserPublisher extends BasePublisher {
+    queue = "created.user"
     constructor(msg) {
-        super('created.user')
-
+        super();
         this.send(
             Buffer.from(JSON.stringify(msg))
         )

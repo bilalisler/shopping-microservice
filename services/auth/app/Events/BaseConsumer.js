@@ -1,9 +1,8 @@
 import amqplib from 'amqplib'
 
 export default class BaseConsumer {
-    constructor(queue) {
-        this.queue = queue
-
+    queue; // override
+    constructor() {
         this.consume(this.handler)
     }
 

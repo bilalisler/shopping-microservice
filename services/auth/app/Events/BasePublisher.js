@@ -1,10 +1,8 @@
 import amqplib from 'amqplib'
 
 export default class BasePublisher {
-    #connection;
-    constructor(queue) {
-        this.queue = queue
-    }
+    queue; // override
+    connection;
 
     async createChannel() {
         this.connection = await amqplib.connect('amqp://localhost');
