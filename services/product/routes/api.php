@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Middleware\EnsureTokenIsValid;
-use Illuminate\Http\Request;
+use App\Http\Controllers\BranchController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,11 +16,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::prefix('product')->group(function () {
+    Route::get('/', [ProductController::class, 'show']);
+});
 
-Route::middleware([])
-    ->prefix('products')
-    ->group(function () {
-        Route::get('/', function (){
-            dd('test');
-        });
-    });
+Route::prefix('category')->group(function () {
+    Route::get('/', [CategoryController::class, 'show']);
+});
+
+Route::prefix('brand')->group(function () {
+    Route::get('/', [BranchController::class, 'show']);
+});
