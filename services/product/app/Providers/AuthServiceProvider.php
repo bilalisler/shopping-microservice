@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use App\Service\JWT;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -21,6 +24,15 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Auth::viaRequest('jwt', function (Request $request) {
+
+            if (!($token = $request->header('Authorization'))) {
+                throw new AuthenticationException('inval');
+            }
+
+            $jwt = str_replace('Bearer ', '', $token);
+
+            return JWT::decode($jwt, 'supersecret')?->_doc;
+        });
     }
 }
