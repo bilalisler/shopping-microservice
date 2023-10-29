@@ -2,16 +2,16 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\gallery;
 use Illuminate\Database\Seeder;
 
-class BranchSeeder extends Seeder
+class GallerySeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        //
+        Gallery::factory(10)->create();
     }
 }

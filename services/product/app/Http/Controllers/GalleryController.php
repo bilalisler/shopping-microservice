@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Branch;
+use App\Models\gallery;
 use Illuminate\Http\Request;
 
-class BranchController extends Controller
+class GalleryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class BranchController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Branch $branch)
+    public function show(gallery $gallery)
     {
         //
     }
@@ -42,7 +42,7 @@ class BranchController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Branch $branch)
+    public function edit(gallery $gallery)
     {
         //
     }
@@ -50,7 +50,7 @@ class BranchController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Branch $branch)
+    public function update(Request $request, gallery $gallery)
     {
         //
     }
@@ -58,7 +58,7 @@ class BranchController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Branch $branch)
+    public function destroy(gallery $gallery)
     {
         //
     }

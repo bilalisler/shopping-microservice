@@ -14,4 +14,9 @@ trait BaseEnum
 
         return null;
     }
+
+    public static function toArray(): array
+    {
+        return array_map(fn($case) => $case->name, self::cases());
+    }
 }

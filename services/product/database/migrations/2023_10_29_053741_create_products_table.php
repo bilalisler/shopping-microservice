@@ -18,7 +18,7 @@ return new class extends Migration
             $table->float('price');
             $table->smallInteger('quantity');
             $table->text('description');
-            $table->enum('status', \App\Enums\ProductStatus::cases());
+            $table->enum('status', \App\Enums\ProductStatus::toArray());
 
             $table->timestamps();
         });

@@ -22,12 +22,10 @@ class JWT
             throw new UnexpectedValueException('Wrong number of segments');
         }
         list($headb64, $payloadb64, $cryptob64) = $tks;
-        if (null === ($header = JWT::jsonDecode(JWT::urlsafeB64Decode($headb64)))
-        ) {
+        if (null === ($header = JWT::jsonDecode(JWT::urlsafeB64Decode($headb64)))) {
             throw new UnexpectedValueException('Invalid segment encoding');
         }
-        if (null === $payload = JWT::jsonDecode(JWT::urlsafeB64Decode($payloadb64))
-        ) {
+        if (null === $payload = JWT::jsonDecode(JWT::urlsafeB64Decode($payloadb64))) {
             throw new UnexpectedValueException('Invalid segment encoding');
         }
         $sig = JWT::urlsafeB64Decode($cryptob64);
