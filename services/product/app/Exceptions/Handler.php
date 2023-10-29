@@ -3,9 +3,11 @@
 namespace App\Exceptions;
 
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Throwable;
 
@@ -27,8 +29,16 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
+        $this->renderable(function (UniqueConstraintViolationException $e, Request $request) {
+            return response()->json(['message' => 'Product name has been used already'],400);
+        });
+
+        $this->renderable(function (Throwable $e, Request $request) {
+            return response()->json(['message' => $e->getMessage()]);
+        });
+
         $this->reportable(function (Throwable $e) {
-            //
+            //@TODO: log sentry or other
         });
     }
 

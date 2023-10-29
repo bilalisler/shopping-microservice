@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,23 +20,32 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('product')->group(function () {
     Route::get('/list', [ProductController::class, 'list']);
     Route::get('/{slug}', [ProductController::class, 'show']);
-    Route::post('/', [ProductController::class, 'store']);
+    Route::post('/', [ProductController::class, 'create']);
     Route::put('/', [ProductController::class, 'update']);
-    Route::delete('/', [ProductController::class, 'destroy']);
+    Route::delete('/', [ProductController::class, 'delete']);
 });
 
 Route::prefix('category')->group(function () {
     Route::get('/list', [CategoryController::class, 'list']);
+    Route::get('/{slug}/products', [CategoryController::class, 'products']);
     Route::get('/{slug}', [CategoryController::class, 'show']);
-    Route::post('/', [CategoryController::class, 'store']);
+    Route::post('/', [CategoryController::class, 'create']);
     Route::put('/', [CategoryController::class, 'update']);
-    Route::delete('/', [CategoryController::class, 'destroy']);
+    Route::delete('/', [CategoryController::class, 'delete']);
 });
 
 Route::prefix('brand')->group(function () {
     Route::get('/list', [BrandController::class, 'list']);
     Route::get('/{slug}', [BrandController::class, 'show']);
-    Route::post('/', [BrandController::class, 'store']);
+    Route::post('/', [BrandController::class, 'create']);
     Route::put('/', [BrandController::class, 'update']);
-    Route::delete('/', [BrandController::class, 'destroy']);
+    Route::delete('/', [BrandController::class, 'delete']);
+});
+
+Route::prefix('gallery')->group(function () {
+    Route::get('/list', [GalleryController::class, 'list']);
+    Route::get('/', [GalleryController::class, 'show']);
+    Route::post('/', [GalleryController::class, 'create']);
+    Route::put('/', [GalleryController::class, 'update']);
+    Route::delete('/', [GalleryController::class, 'delete']);
 });

@@ -10,16 +10,11 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('galleryables', function (Blueprint $table) {
             $table->id();
-
-            $table->string('name');
-            $table->string('slug')->unique();
-
-            $table->unsignedBigInteger('parent_id')->nullable();
-            $table->foreign('parent_id')->references('id')->on('categories');
-
-            $table->timestamps();
+            $table->integer("gallery_id");
+            $table->integer("galleryable_id");
+            $table->string("galleryable_type");
         });
     }
 
@@ -28,6 +23,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('galleryables');
     }
 };

@@ -14,9 +14,6 @@ return new class extends Migration
         Schema::create('galleries', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('product_id');
-            $table->foreign('product_id')->references('id')->on('products');
-
             $table->text('image_path');
             $table->boolean('thumbnail');
             $table->smallInteger('display_order');

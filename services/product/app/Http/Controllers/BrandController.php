@@ -2,64 +2,58 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateBrandRequest;
+use App\Http\Requests\DeleteBrandRequest;
+use App\Http\Requests\UpdateBrandRequest;
+use App\Http\Resources\BrandResource;
 use App\Models\Brand;
-use Illuminate\Http\Request;
+use App\Repository\BrandRepository;
+use Illuminate\Support\Arr;
 
 class BrandController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function list()
     {
-        //
+        return response(
+            BrandResource::collection(
+                Brand::all()
+            )
+        );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function show($slug)
     {
-        //
+        return response(
+            BrandResource::make(
+                BrandRepository::findBySlug($slug)
+            )
+        );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function create(CreateBrandRequest $request)
     {
-        //
+        Brand::create($request->validated());
+
+        return response()->json(['message' => 'success']);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Brand $brand)
+    public function update(UpdateBrandRequest $request)
     {
-        //
+        BrandRepository::update(
+            $request->validated('slug'),
+            Arr::except($request->validated(),'slug')
+        );
+
+        return response()->json(['message' => 'success']);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Brand $brand)
+    public function delete(DeleteBrandRequest $request)
     {
-        //
-    }
+        BrandRepository::delete(
+            $request->validated('slug')
+        );
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Brand $brand)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Brand $brand)
-    {
-        //
+        return response()->json(['message' => 'success']);
     }
 }

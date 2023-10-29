@@ -2,64 +2,72 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateCategoryRequest;
+use App\Http\Requests\DeleteCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
+use App\Http\Resources\CategoryResource;
+use App\Http\Resources\ProductResource;
 use App\Models\Category;
-use Illuminate\Http\Request;
+use App\Repository\CategoryRepository;
+use Illuminate\Support\Arr;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function list()
     {
-        //
+        return response(
+            CategoryResource::collection(
+                Category::all()
+            )
+        );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function show($slug)
     {
-        //
+        return response(
+            CategoryResource::make(
+                CategoryRepository::findBySlug($slug)
+            )
+        );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function products($slug)
     {
-        //
+        /**
+         * @var $category Category
+         */
+        $category = CategoryRepository::findBySlug($slug);
+
+        return response(
+            ProductResource::collection(
+                $category->products
+            )
+        );
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Category $category)
+    public function create(CreateCategoryRequest $request)
     {
-        //
+        Category::create($request->validated());
+
+        return response()->json(['message' => 'success']);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Category $category)
+    public function update(UpdateCategoryRequest $request)
     {
-        //
+        CategoryRepository::update(
+            $request->validated('slug'),
+            Arr::except($request->validated(),'slug')
+        );
+
+        return response()->json(['message' => 'success']);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Category $category)
+    public function delete(DeleteCategoryRequest $request)
     {
-        //
-    }
+        CategoryRepository::delete(
+            $request->validated('slug')
+        );
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Category $category)
-    {
-        //
+        return response()->json(['message' => 'success']);
     }
 }

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
@@ -18,6 +19,7 @@ class ProductFactory extends Factory
     {
         return [
             'name' => fake()->name,
+            'slug' => Str::slug(fake()->name),
             'price' => fake()->randomDigit(),
             'quantity' => fake()->randomDigit(),
             'description' => fake()->paragraph(),

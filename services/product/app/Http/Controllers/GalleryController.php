@@ -2,64 +2,59 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\gallery;
-use Illuminate\Http\Request;
+use App\Http\Requests\CreateGalleryRequest;
+use App\Http\Requests\DeleteGalleryRequest;
+use App\Http\Requests\UpdateGalleryRequest;
+use App\Http\Resources\GalleryResource;
+use App\Models\Gallery;
+use App\Repository\GalleryRepository;
+use Illuminate\Support\Arr;
 
 class GalleryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function list()
     {
-        //
+        return response(
+            GalleryResource::collection(
+                Gallery::all()
+            )
+        );
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function show($slug)
     {
-        //
+        return response(
+            GalleryResource::make(
+                GalleryRepository::find($slug)
+            )
+        );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function create(CreateGalleryRequest $request)
     {
-        //
+        $productId = $request->validated('product_id');
+
+        GalleryRepository::create($productId,Arr::except($request->validated(),'product_id'));
+
+        return response()->json(['message' => 'success']);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(gallery $gallery)
+    public function update(UpdateGalleryRequest $request)
     {
-        //
+        GalleryRepository::update(
+            $request->validated('id'),
+            Arr::except($request->validated(),'id')
+        );
+
+        return response()->json(['message' => 'success']);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(gallery $gallery)
+    public function delete(DeleteGalleryRequest $request)
     {
-        //
-    }
+        GalleryRepository::delete(
+            $request->validated('slug')
+        );
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, gallery $gallery)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(gallery $gallery)
-    {
-        //
+        return response()->json(['message' => 'success']);
     }
 }

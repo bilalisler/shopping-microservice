@@ -2,49 +2,57 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ShowProductRequest;
+use App\Http\Requests\CreateProductRequest;
+use App\Http\Requests\DeleteProductRequest;
+use App\Http\Requests\UpdateProductRequest;
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
-use Illuminate\Http\Request;
+use App\Repository\ProductRepository;
+use Illuminate\Support\Arr;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function list()
     {
-        //
+        return response(
+            ProductResource::collection(
+                Product::all()
+            )
+        );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function show($slug)
     {
-        //
+        return response(
+            ProductResource::make(
+                ProductRepository::findBySlug($slug)
+            )
+        );
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(ShowProductRequest $request)
+    public function create(CreateProductRequest $request)
     {
-        //
+        Product::create($request->validated());
+
+        return response()->json(['message' => 'success']);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Product $product)
+    public function update(UpdateProductRequest $request)
     {
-        //
+        ProductRepository::update(
+            $request->validated('slug'),
+            Arr::except($request->validated(),'slug')
+        );
+
+        return response()->json(['message' => 'success']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Product $product)
+    public function delete(DeleteProductRequest $request)
     {
-        //
+        ProductRepository::delete(
+            $request->validated('slug')
+        );
+
+        return response()->json(['message' => 'success']);
     }
 }
