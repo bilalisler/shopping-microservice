@@ -1,17 +1,21 @@
-import app from './app'
-import ProfileController from "./Controllers/ProfileController";
-import dotenv from "dotenv";
+import App from "./Modules/App";
 
-dotenv.config()
+/**
+ * Load Configuration
+ */
+App.loadConfiguration();
 
-const profile = new ProfileController();
+/**
+ * Loads the Queue Monitor iff enabled
+ */
+App.loadQueue();
 
-app.route("/profile")
-    .get(profile.show)
-    .post(profile.create)
-    .put(profile.update)
-    .delete(profile.delete)
+/**
+ * Run the Database pool
+ */
+App.loadDatabase();
 
-app.listen(process.env.APP_PORT, () => {
-    console.log(`Server running at http://localhost:${process.env.APP_PORT}`);
-})
+/**
+ * Run the Server on Clusters
+ */
+App.loadServer();

@@ -1,6 +1,6 @@
 import {Request, RequestHandler, Response} from "express";
 
-export default class ProfileController {
+class ProfileController {
 
     public constructor() {
     }
@@ -21,3 +21,5 @@ export default class ProfileController {
         res.json({requestBody2: req.body})
     }
 }
+
+export default new ProfileController
