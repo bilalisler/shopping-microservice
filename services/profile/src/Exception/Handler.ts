@@ -1,7 +1,7 @@
-import {ErrorRequestHandler, NextFunction, Response} from "express";
+import {Request, NextFunction, Response} from "express";
 
 class Handler {
-    public errorHandler = (err: any, req: Request, res: Response, next: NextFunction): any => {
+    public errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
         res.status(500).send('Something broke!')
     }
 }

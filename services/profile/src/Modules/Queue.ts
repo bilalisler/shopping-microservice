@@ -1,9 +1,9 @@
-class Queue {
-    constructor() {
-    }
+import CreatedProfileConsumer from "../Events/Consumer/CreatedProfileConsumer";
 
+class Queue {
     public init = () => {
-        // initialize queue
+        // initialize queues
+        new CreatedProfileConsumer();
     };
 }
 

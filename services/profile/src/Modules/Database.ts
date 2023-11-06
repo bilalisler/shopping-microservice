@@ -1,8 +1,9 @@
 import mongoose from 'mongoose'
+import Locals from "./Locals";
 
 class Database {
     public init = () => {
-        const dsn = `mongodb://${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/${process.env.MONGO_DBNAME}`
+        const dsn = `mongodb://${Locals.config().mongoHost}:${Locals.config().mongoPort}/${Locals.config().mongoDBName}`
 
         mongoose.connect(dsn)
             .then(() => {
