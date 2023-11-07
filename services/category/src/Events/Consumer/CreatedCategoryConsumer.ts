@@ -1,7 +1,7 @@
 import BaseConsumer from "../BaseConsumer";
 import {Channel, Message} from "amqplib";
 
-export default class CreatedProfileConsumer extends BaseConsumer {
+export default class CreatedCategoryConsumer extends BaseConsumer {
     constructor() {
         super('created.user')
     }

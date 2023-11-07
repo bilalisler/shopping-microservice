@@ -15,7 +15,7 @@ class Locals {
         const mongoHost = process.env.MONGO_HOST || 'localhost';
         const mongoPort = process.env.MONGO_PORT || 27017;
         const mongoUIPort = process.env.MONGO_UI_PORT || 8081;
-        const mongoDBName = process.env.MONGO_DBNAME || 'profile_db';
+        const mongoDBName = process.env.MONGO_DBNAME || 'category_db';
 
         return {
             environment,

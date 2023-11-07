@@ -1,7 +1,7 @@
 {
-  "name": "profile",
+  "name": "category",
   "version": "1.0.0",
-  "description": "Profile Microservice",
+  "description": "Category Microservice",
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {

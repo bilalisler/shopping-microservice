@@ -1,6 +1,6 @@
 import {Request, RequestHandler, Response} from "express";
 
-class ProfileController {
+class CategoryController {
 
     public constructor() {
     }
@@ -22,4 +22,4 @@ class ProfileController {
     }
 }
 
-export default new ProfileController
+export default new CategoryController
