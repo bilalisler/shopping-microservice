@@ -1,4 +1,4 @@
-import amqp, {Channel,Connection} from 'amqplib'
+import amqp, {Channel, Connection} from 'amqplib'
 import Locals from "../Modules/Locals";
 
 class BasePublisher {
@@ -10,7 +10,7 @@ class BasePublisher {
     }
 
     async createChannel() {
-        this.connection = await amqp.connect('amqp://' + Locals.config().rabbitMQHost);
+        this.connection = await amqp.connect('amqp://' + Locals.config().rabbitMQHost + ':' + Locals.config().rabbitMQPort);
 
         return await this.connection.createChannel()
     }

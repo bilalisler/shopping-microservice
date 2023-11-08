@@ -3,13 +3,14 @@ import Locals from "../Modules/Locals";
 
 abstract class BaseConsumer {
     queue: string;
+
     constructor(queueName: string) {
         this.queue = queueName;
         this.consume(this.handler)
     }
 
     async createChannel() {
-        const conn: Connection = await amqp.connect('amqp://' + Locals.config().rabbitMQHost);
+        const conn: Connection = await amqp.connect('amqp://' + Locals.config().rabbitMQHost + ':' + Locals.config().rabbitMQPort);
         const ch: Channel = await conn.createChannel()
         await ch.assertQueue(this.queue)
         return ch

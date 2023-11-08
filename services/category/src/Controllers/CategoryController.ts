@@ -1,24 +1,24 @@
-import {Request, RequestHandler, Response} from "express";
+import {Request, Response} from "express";
+import CategoryService from "../Services/CategoryService";
 
 class CategoryController {
-
-    public constructor() {
+    public async show(req: Request, res: Response) {
+        res.json(await CategoryService.all())
     }
 
-    public show(req: Request, res: Response) {
-        res.json({requestBody2: req.body})
+    public async create(req: Request, res: Response) {
+        const data = req.body
+        res.json(await CategoryService.create(data))
     }
 
-    public create(req: Request, res: Response) {
-        res.json({requestBody2: req.body})
+    public async update(req: Request, res: Response) {
+        const data = req.body
+        res.json(await CategoryService.update(data))
     }
 
-    public update(req: Request, res: Response) {
-        res.json({requestBody2: req.body})
-    }
-
-    public delete(req: Request, res: Response) {
-        res.json({requestBody2: req.body})
+    public async delete(req: Request, res: Response) {
+        const data = req.body
+        res.json(await CategoryService.delete(data))
     }
 }
 

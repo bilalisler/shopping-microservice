@@ -4,7 +4,12 @@ db.createCollection('categories');
 
 db.users.insertMany([
     {
-        test: 1,
-        // other details
+        "slug": "laptop",
+        "name": "laptop",
+        "description": "laptop",
+        "image_path": "",
+        "is_active": false,
+        "created_by": "bilal",
+        "updated_by": "bilal"
     }
 ]);
