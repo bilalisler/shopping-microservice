@@ -1,0 +1,74 @@
+version: "3.9"
+
+services:
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    container_name: nginx
+    depends_on:
+      - php
+      - mysql
+    ports:
+      - '${APP_PORT:-80}:80'
+      - '${APP_PORT_SECUR:-443}:443'
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - laravel
+
+  php:
+    build:
+      context: .
+      dockerfile: docker/php/php.dockerfile
+    volumes:
+      - ./:/var/www/html
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - laravel
+
+  mysql:
+    image: mysql:8.0.27
+    container_name: mysql
+    platform: linux/amd64
+    #    ports:
+    #      - '${FORWARD_DB_PORT:-3306}:3306'
+    volumes:
+      - ./docker/mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: laraveldb
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+    networks:
+      - laravel
+
+  composer:
+    image: composer:latest
+    volumes:
+      - ./:/var/www/html
+    working_dir: /var/www/html
+    command: install
+    networks:
+      - laravel
+
+  redis:
+    image: 'redis:alpine'
+    container_name: redis
+    ports:
+      - '${FORWARD_REDIS_PORT:-6379}:6379'
+    volumes:
+      - ./docker/redis_data:/data
+    networks:
+      - laravel
+    healthcheck:
+      test:
+        - CMD
+        - redis-cli
+        - ping
+      retries: 3
+      timeout: 5s
+
+networks:
+  laravel:
+    name: laravel
