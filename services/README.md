@@ -1,5 +1,5 @@
 ### Completed Services 
 
 - Auth
-- product
-- category
+- Product
+- Comment
