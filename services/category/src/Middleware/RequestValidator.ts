@@ -14,7 +14,7 @@ export default function validateBody(schema: object) {
     }
 }
 
-function errors(errors: DefinedError[]) {
+function errors(errors: DefinedError[]) { // @TODO: fix error displaying
     for (const err of errors) {
         switch (err.keyword) {
             case "type":

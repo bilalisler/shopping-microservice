@@ -28,16 +28,26 @@ class CategoryService implements ICategoryService {
         )
     }
 
-    public async update(data: IUpdateCategoryRequest) {
+    public async update(data: IUpdateCategoryRequest): Promise<ICategory | null> {
         const {id, ...updateData} = data;
         const filter: object = {_id: id}
         const options: object = {returnDocument: "after"}
 
-        return await Category.findOneAndUpdate(filter, updateData, options);
+        return await Category.findOneAndUpdate(
+            filter,
+            {
+                ...updateData,
+                ...{
+                    slug: generateSlug(updateData.name),
+                    updated_by: "user-123123"
+                }
+            }
+            , options
+        );
     }
 
-    public async delete(data: IDeleteCategoryRequest) {
-        return await Category.deleteOne(data)
+    public async delete(data: IDeleteCategoryRequest): Promise<ICategory | null> {
+        return await Category.findByIdAndDelete({_id: data.id})
     }
 }
 
