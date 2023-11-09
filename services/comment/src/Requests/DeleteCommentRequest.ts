@@ -7,6 +7,6 @@ export default {
     additionalProperties: false,
 }
 
-export interface IDeleteCategoryRequest {
+export interface IDeleteCommentRequest {
     id: string;
 }

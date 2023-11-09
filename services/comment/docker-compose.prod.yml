@@ -3,6 +3,7 @@ version: '3.1'
 services:
   mongo:
     image: mongo
+    container_name: mongo
     restart:
       on-failure
     ports:
@@ -26,6 +27,7 @@ services:
 
   rabbitmq:
     image: rabbitmq:3-management
+    container_name: rabbitmq
     restart:
       on-failure
     ports:
@@ -35,7 +37,7 @@ services:
       - ./docker/rabbitmq_data:/data
 
   app:
-    image: category/app
+    image: app
     build:
       dockerfile: ./Dockerfile
     depends_on:

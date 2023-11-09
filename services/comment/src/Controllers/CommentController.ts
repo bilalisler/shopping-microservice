@@ -1,25 +1,25 @@
 import {Request, Response} from "express";
-import CategoryService from "../Services/CategoryService";
+import CommentService from "../Services/CommentService";
 
-class CategoryController {
+class CommentController {
     public async show(req: Request, res: Response) {
-        res.json(await CategoryService.all())
+        res.json(await CommentService.all())
     }
 
     public async create(req: Request, res: Response) {
         const data = req.body
-        res.json(await CategoryService.create(data))
+        res.json(await CommentService.create(data))
     }
 
     public async update(req: Request, res: Response) {
         const data = req.body
-        res.json(await CategoryService.update(data))
+        res.json(await CommentService.update(data))
     }
 
     public async delete(req: Request, res: Response) {
         const data = req.body
-        res.json(await CategoryService.delete(data))
+        res.json(await CommentService.delete(data))
     }
 }
 
-export default new CategoryController
+export default new CommentController

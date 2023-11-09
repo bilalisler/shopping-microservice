@@ -1,6 +1,6 @@
 import BasePublisher from "../BasePublisher";
 
-export default class CreatedCategoryPublisher extends BasePublisher {
+export default class CreatedCommentPublisher extends BasePublisher {
     constructor() {
         super('created.user')
 
