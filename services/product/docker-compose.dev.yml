@@ -31,8 +31,8 @@ services:
     image: mysql:8.0.27
     container_name: mysql
     platform: linux/amd64
-    #    ports:
-    #      - '${FORWARD_DB_PORT:-3306}:3306'
+    ports:
+      - '${FORWARD_DB_PORT:-3306}:3306'
     volumes:
       - ./docker/mysql_data:/var/lib/mysql
     environment:
