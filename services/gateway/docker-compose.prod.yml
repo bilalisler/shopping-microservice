@@ -1,0 +1,21 @@
+version: '3.1'
+
+services:
+  app:
+    image: app
+    build: .
+    volumes:
+      - ./:/build
+    depends_on:
+      - mongo
+      - rabbitmq
+    restart:
+      on-failure
+    ports:
+      - "${APP_PORT}:3000"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:${APP_PORT}" ]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
