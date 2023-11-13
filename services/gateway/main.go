@@ -19,7 +19,8 @@ func main() {
 	app.Use(cors.New())
 
 	router.AuthRouter(app)
-	router.UserRouter(app)
+	router.ProductRouter(app)
+	router.CommentRouter(app)
 
 	appPort := os.Getenv("APP_PORT")
 	log.Fatal(app.Listen(":" + appPort))
