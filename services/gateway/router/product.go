@@ -32,7 +32,8 @@ func ProductRouter(app *fiber.App) {
 		Put("/", proxy.Forward(host+"/api/product/")).
 		Delete("/", proxy.Forward(host+"/api/product/"))
 
-	app.Group("/brand").
+	app.
+		Group("/brand").
 		Get("/:slug", func(c *fiber.Ctx) error {
 			return proxy.Do(c, host+"/api/brand/"+c.Params("slug"))
 		}).
@@ -41,7 +42,8 @@ func ProductRouter(app *fiber.App) {
 		Put("/", proxy.Forward(host+"/api/brand/")).
 		Delete("/", proxy.Forward(host+"/api/brand/"))
 
-	app.Group("/gallery").
+	app.
+		roup("/gallery").
 		Get("/:slug", func(c *fiber.Ctx) error {
 			return proxy.Do(c, host+"/api/gallery/"+c.Params("slug"))
 		}).
