@@ -1,7 +1,7 @@
 package main
 
 import (
-	router "gateway/router"
+	"gateway/router"
 	fiber "github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/joho/godotenv"
@@ -18,8 +18,8 @@ func main() {
 	app := fiber.New()
 	app.Use(cors.New())
 
-	router.AuthRouter(app)
 	router.ProductRouter(app)
+	router.AuthRouter(app)
 	router.CommentRouter(app)
 
 	appPort := os.Getenv("APP_PORT")

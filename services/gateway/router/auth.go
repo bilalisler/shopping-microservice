@@ -11,21 +11,12 @@ func AuthRouter(app *fiber.App) {
 
 	app.
 		Group("/auth").
-		Use(proxy.Balancer(proxy.Config{
-			Servers: []string{
-				host,
-			},
-		})).
-		Post("/login", proxy.Forward("/auth/login")).
-		Post("/signup", proxy.Forward("/auth/signup")).
-		Post("/refresh", proxy.Forward("/auth/signup"))
+		Post("/login", proxy.Forward(host+"/auth/login")).
+		Post("/signup", proxy.Forward(host+"/auth/signup")).
+		Post("/refresh", proxy.Forward(host+"/auth/signup"))
 
 	app.
 		Group("/user").
-		Use(proxy.Balancer(proxy.Config{
-			Servers: []string{
-				host,
-			},
-		})).
-		Post("/", proxy.Forward("/user/"))
+		Post("/", proxy.Forward(host+"/user/")).
+		Put("/", proxy.Forward(host+"/user/"))
 }

@@ -10,14 +10,9 @@ func CommentRouter(app *fiber.App) {
 	host := os.Getenv("COMMENT_HOST")
 
 	app.
-		Group("/auth").
-		Use(proxy.Balancer(proxy.Config{
-			Servers: []string{
-				host,
-			},
-		})).
-		Post("/", proxy.Forward("/")).
-		Put("/", proxy.Forward("/")).
-		Get("/", proxy.Forward("/")).
-		Delete("/", proxy.Forward("/"))
+		Group("/comment").
+		Get("/", proxy.Forward(host+"/")).
+		Post("/", proxy.Forward(host+"/")).
+		Put("/", proxy.Forward(host+"/")).
+		Delete("/", proxy.Forward(host+"/"))
 }
