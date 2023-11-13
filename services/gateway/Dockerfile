@@ -1,14 +1,10 @@
 FROM golang:alpine
-WORKDIR /build
+WORKDIR /app
+COPY go.mod go.sum ./
+RUN go mod download
 COPY . .
-RUN apk update && apk add protoc
-CMD ["rm","-r","generated"]
-CMD ["mkdir","-p","generated"]
-CMD ["protoc", "--go_out=generated", "--go-grpc_out=generated", "--proto_path=proto", "proto/*.proto"]
-RUN go get -d -v ./...
-RUN go build -o target ./main
+COPY .env.prod .env
+RUN go build -v -o server
+EXPOSE 3000
+CMD ["/app/server"]
 
-FROM alpine:latest
-COPY --from=0 build/config/prod.env .
-COPY --from=0 build/target .
-CMD ["./target","-production"]

@@ -6,7 +6,6 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/joho/godotenv"
 	"log"
-	"os"
 )
 
 func main() {
@@ -21,7 +20,7 @@ func main() {
 	router.ProductRouter(app)
 	router.AuthRouter(app)
 	router.CommentRouter(app)
+	router.HealthRouter(app)
 
-	appPort := os.Getenv("APP_PORT")
-	log.Fatal(app.Listen(":" + appPort))
+	log.Fatal(app.Listen(":3000"))
 }

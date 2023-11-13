@@ -32,6 +32,8 @@ isFileExist(){
   return 1
 }
 
+runDocker $env "global"
+
 for dir in */ ; do
 
     if [ -d "$dir" ]; then
