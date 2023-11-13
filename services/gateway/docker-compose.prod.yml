@@ -8,7 +8,6 @@ services:
       - ./:/build
     depends_on:
       - mongo
-      - rabbitmq
     restart:
       on-failure
     ports:

@@ -1,13 +1,20 @@
 version: '3.1'
 
 services:
-  rabbitmq:
-    image: rabbitmq:3-management
-    container_name: rabbitmq
+  app:
+    image: app
+    build: .
+    volumes:
+      - ./:/build
+    depends_on:
+      - mongo
     restart:
       on-failure
     ports:
-      - "${RABBITMQ_PORT}:5672"
-      - "${RABBITMQ_UI_PORT}:15672"
-    volumes:
-      - ./docker/rabbitmq_data:/data
+      - "${APP_PORT}:3000"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:${APP_PORT}" ]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

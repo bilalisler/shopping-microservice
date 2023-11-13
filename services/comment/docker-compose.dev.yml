@@ -25,17 +25,6 @@ services:
       ME_CONFIG_BASICAUTH_PASSWORD: 123456
       ME_CONFIG_MONGODB_URL: mongodb://mongo:27017/
 
-  rabbitmq:
-    image: rabbitmq:3-management
-    container_name: rabbitmq
-    restart:
-      on-failure
-    ports:
-      - "${RABBITMQ_PORT}:5672"
-      - "${RABBITMQ_UI_PORT}:15672"
-    volumes:
-      - ./docker/rabbitmq_data:/data
-
 #  app:
 #    image: app
 #    build:
