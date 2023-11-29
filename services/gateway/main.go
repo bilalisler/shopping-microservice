@@ -14,6 +14,8 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
+	//middleware.Jwt()
+
 	app := fiber.New()
 	app.Use(cors.New())
 
