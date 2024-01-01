@@ -8,7 +8,7 @@
 | ✅           | Comment | ![Node.js](https://img.shields.io/badge/-Node.js-eeeeee?style=flat&logo=node.js) | Express.js |
 | ✅           | Gateway | ![GO](https://img.shields.io/badge/-GO-eeeeee?style=flat&logo=GO)                | Fiber      |
 | ✅           | Product | ![PHP](https://img.shields.io/badge/-PHP-eeeeee?style=flat&logo=PHP)             | Laravel    |
-| ⬜           | Cart    |                                                                                  |            |
+| ⬜           | Cart    | ![Node.js](https://img.shields.io/badge/-Node.js-eeeeee?style=flat&logo=node.js) | Express.js |
 | ⬜           | Order   |                                                                                  |            |
 | ⬜           | User    |                                                                                  |            |
 
