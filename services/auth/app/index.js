@@ -5,7 +5,7 @@ app.ready().then(() => {
     database()
 })
 
-app.listen({host: process.env.APP_HOST, port: 3000}, function (err, address) {
+app.listen({host: process.env.APP_HOST, port: process.env.APP_PORT}, function (err, address) {
     if (err) {
         app.log.error(err)
         process.exit(1)

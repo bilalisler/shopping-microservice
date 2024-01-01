@@ -28,14 +28,16 @@ services:
     image: auth/app
     build:
       dockerfile: ./Dockerfile
+      args:
+        APP_PORT: ${APP_PORT}
     depends_on:
       - mongo
     restart:
       on-failure
     ports:
-      - "${APP_PORT}:3000"
+      - "${APP_PORT}:${APP_PORT}"
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:${APP_PORT}" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:${APP_PORT}/health/check" ]
       interval: 1m30s
       timeout: 10s
       retries: 3
