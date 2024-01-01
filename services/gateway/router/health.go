@@ -7,6 +7,8 @@ import (
 func HealthRouter(app *fiber.App) {
 	app.
 		Get("/health/check", func(c *fiber.Ctx) error {
-			return c.SendString("successful")
+			return c.Status(fiber.StatusOK).JSON(fiber.Map{
+				"status": "success Gateway",
+			})
 		})
 }

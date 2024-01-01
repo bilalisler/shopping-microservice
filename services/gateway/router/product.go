@@ -1,6 +1,7 @@
 package router
 
 import (
+	"gateway/middleware"
 	fiber "github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/proxy"
 	"os"
@@ -18,9 +19,9 @@ func ProductRouter(app *fiber.App) {
 			return proxy.Do(c, host+"/api/category/"+c.Params("slug")+"/products")
 		}).
 		Get("/list", proxy.Forward(host+"/api/category/list")).
-		Post("/", proxy.Forward(host+"/api/category/")).
-		Put("/", proxy.Forward(host+"/api/category/")).
-		Delete("/", proxy.Forward(host+"/api/category/"))
+		Post("/", middleware.VerifyToken(), proxy.Forward(host+"/api/category/")).
+		Put("/", middleware.VerifyToken(), proxy.Forward(host+"/api/category/")).
+		Delete("/", middleware.VerifyToken(), proxy.Forward(host+"/api/category/"))
 
 	app.
 		Group("/product").
@@ -28,9 +29,9 @@ func ProductRouter(app *fiber.App) {
 			return proxy.Do(c, host+"/api/product/"+c.Params("slug"))
 		}).
 		Get("/list", proxy.Forward(host+"/api/product/list")).
-		Post("/", proxy.Forward(host+"/api/product/")).
-		Put("/", proxy.Forward(host+"/api/product/")).
-		Delete("/", proxy.Forward(host+"/api/product/"))
+		Post("/", middleware.VerifyToken(), proxy.Forward(host+"/api/product/")).
+		Put("/", middleware.VerifyToken(), proxy.Forward(host+"/api/product/")).
+		Delete("/", middleware.VerifyToken(), proxy.Forward(host+"/api/product/"))
 
 	app.
 		Group("/brand").
@@ -38,9 +39,9 @@ func ProductRouter(app *fiber.App) {
 			return proxy.Do(c, host+"/api/brand/"+c.Params("slug"))
 		}).
 		Get("/list", proxy.Forward(host+"/api/brand/list")).
-		Post("/", proxy.Forward(host+"/api/brand/")).
-		Put("/", proxy.Forward(host+"/api/brand/")).
-		Delete("/", proxy.Forward(host+"/api/brand/"))
+		Post("/", middleware.VerifyToken(), proxy.Forward(host+"/api/brand/")).
+		Put("/", middleware.VerifyToken(), proxy.Forward(host+"/api/brand/")).
+		Delete("/", middleware.VerifyToken(), proxy.Forward(host+"/api/brand/"))
 
 	app.
 		Group("/gallery").
@@ -48,8 +49,8 @@ func ProductRouter(app *fiber.App) {
 			return proxy.Do(c, host+"/api/gallery/"+c.Params("slug"))
 		}).
 		Get("/list", proxy.Forward(host+"/api/gallery/list")).
-		Post("/", proxy.Forward(host+"/api/gallery/")).
-		Put("/", proxy.Forward(host+"/api/gallery/")).
-		Delete("/", proxy.Forward(host+"/api/gallery/"))
+		Post("/", middleware.VerifyToken(), proxy.Forward(host+"/api/gallery/")).
+		Put("/", middleware.VerifyToken(), proxy.Forward(host+"/api/gallery/")).
+		Delete("/", middleware.VerifyToken(), proxy.Forward(host+"/api/gallery/"))
 
 }
