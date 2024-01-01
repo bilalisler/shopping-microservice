@@ -7,8 +7,10 @@ import (
 	"strings"
 )
 
-type MyCustomClaims struct {
-	FullName string `json:"fullName"`
+type UserClaims struct {
+	Id     string `json:"_id"`
+	Email  string `json:"email"`
+	Gender string `json:"gender"`
 	jwt.RegisteredClaims
 }
 
@@ -45,8 +47,8 @@ func VerifyToken() func(c *fiber.Ctx) error {
 	}
 }
 
-func parseToken(tokenString string) (*MyCustomClaims, error) {
-	token, err := jwt.ParseWithClaims(tokenString, &MyCustomClaims{}, func(token *jwt.Token) (interface{}, error) {
+func parseToken(tokenString string) (*UserClaims, error) {
+	token, err := jwt.ParseWithClaims(tokenString, &UserClaims{}, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 		}
@@ -55,7 +57,7 @@ func parseToken(tokenString string) (*MyCustomClaims, error) {
 
 	if err != nil {
 		return nil, err
-	} else if claims, ok := token.Claims.(*MyCustomClaims); ok {
+	} else if claims, ok := token.Claims.(*UserClaims); ok {
 		return claims, nil
 	} else {
 		return nil, err
