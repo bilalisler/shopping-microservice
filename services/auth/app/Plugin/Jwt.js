@@ -3,7 +3,8 @@ import fastifyJwt from "@fastify/jwt";
 
 export const jwt = async (fastify, options) => {
     fastify.register(fastifyJwt, {
-        secret: "supersecret"
+        secret: "supersecret",
+        sign: {algorithm: 'HS256'}
     })
 }
 
