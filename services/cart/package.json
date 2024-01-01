@@ -7,7 +7,8 @@
   "license": "MIT",
   "scripts": {
     "build": "npx tsc",
-    "start": "npm run build && node .build/index.js",
+    "start": "rm -rf .build && npm run build && node .build/src/index.j",
+    "prod": "node src/index.js",
     "dev": "nodemon src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
