@@ -17,6 +17,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/health/check', function () {
+    return response([
+        'status' => 'Success Product'
+    ]);
+});
+
 Route::prefix('product')->group(function () {
     Route::get('/list', [ProductController::class, 'list']);
     Route::get('/{slug}', [ProductController::class, 'show']);
