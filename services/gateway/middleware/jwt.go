@@ -8,9 +8,7 @@ import (
 )
 
 type UserClaims struct {
-	Id     string `json:"_id"`
-	Email  string `json:"email"`
-	Gender string `json:"gender"`
+	Id string `json:"_id"`
 	jwt.RegisteredClaims
 }
 
@@ -41,7 +39,7 @@ func VerifyToken() func(c *fiber.Ctx) error {
 			})
 		}
 
-		c.Locals("user", user)
+		c.Request().Header.Add("X-User-ID", user.Id) // send user-id to other services from header
 
 		return c.Next()
 	}
