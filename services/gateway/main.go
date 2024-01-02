@@ -34,6 +34,7 @@ func main() {
 	router.AuthRouter(app)
 	router.CommentRouter(app)
 	router.HealthRouter(app)
+	router.CartRouter(app)
 
 	log.Fatal(app.Listen(":3000"))
 }
