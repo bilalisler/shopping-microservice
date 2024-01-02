@@ -8,16 +8,14 @@ export default class AuthController {
         this.userService = new UserService()
     }
 
-    async logIn(request, reply) {
+    async signIn(request, reply) {
         const {email, password} = request.body
 
         let user = await this.authService.checkCredentials(email, password)
 
         const token = await reply.jwtSign({
             _id: user._id,
-            fullName: user.fullName,
-            email: user.email,
-            gender: user.gender
+            email: user.email
         }, {expiresIn: "10h"})
 
         return reply.send({token})

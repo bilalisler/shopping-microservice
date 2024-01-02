@@ -4,7 +4,7 @@ import AuthController from "../Controllers/AuthController.js";
 export default async function routes(fastify, options) {
     let authController = new AuthController()
 
-    fastify.post('/login', LoginRequest, async (request, reply) => authController.logIn(request, reply))
+    fastify.post('/signin', LoginRequest, async (request, reply) => authController.signIn(request, reply))
 
     fastify.post('/signup', SignUpRequest, async (request, reply) => authController.signUp(request, reply))
 
