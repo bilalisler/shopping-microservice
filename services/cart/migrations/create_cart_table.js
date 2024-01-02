@@ -2,7 +2,7 @@ db = db.getSiblingDB('cart_db');
 
 db.createCollection('carts');
 
-db.users.insertMany([
+db.carts.insertMany([
     {
         user_id: 1,
         expired: false,
