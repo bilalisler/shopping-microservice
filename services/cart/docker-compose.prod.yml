@@ -1,28 +1,29 @@
 version: '3.1'
 
 services:
-  mongo:
-    image: mongo
-    restart:
-      on-failure
-    #ports:
-    #  - "${MONGO_PORT}:27017"
-    volumes:
-      - ./migrations/:/docker-entrypoint-initdb.d/
-      - ./docker/mongo_data:/data/db
-
-  mongo-express:
-    image: mongo-express
-    restart:
-      on-failure
-    depends_on:
-      - mongo
+  redis:
+    image: redislabs/rejson:latest
+    restart: always
     ports:
-      - "${MONGO_UI_PORT}:8081"
+      - "${REDIS_PORT}:6379"
+    networks:
+      - redis-network
     environment:
-      ME_CONFIG_BASICAUTH_USERNAME: express
-      ME_CONFIG_BASICAUTH_PASSWORD: 123456
-      ME_CONFIG_MONGODB_URL: mongodb://mongo:27017/
+      - REDIS_DATABASES=16
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    platform: linux/amd64
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+      - HTTP_USER=root
+      - HTTP_PASSWORD=qwerty
+    ports:
+      - "${REDIS_UI_PORT}:8081"
+    networks:
+      - redis-network
+    depends_on:
+      - redis
 
   app:
     image: app
@@ -31,7 +32,7 @@ services:
       args:
         APP_PORT: ${APP_PORT}
     depends_on:
-      - mongo
+      - redis
     restart:
       on-failure
     ports:

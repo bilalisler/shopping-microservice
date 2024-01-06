@@ -1,8 +1,8 @@
 import express, {Application} from 'express';
 import Locals from "./Locals";
 import ExceptionHandler from './../Exception/Handler'
-import JWT from "../Middleware/JWT";
 import apiRouter from '../Routes/Api'
+import healthRouter from '../Routes/Health'
 
 class Express {
     /**
@@ -26,6 +26,7 @@ class Express {
      */
     private mountRoutes = () => {
         this.express.use(apiRouter)
+        this.express.use(healthRouter)
     };
 
 
@@ -40,14 +41,7 @@ class Express {
      * Registering App Middlewares
      */
     private mountMiddlewares = () => {
-        this.express.use(JWT)
         this.express.use(express.json())
-
-        // Ran on all routes
-        this.express.use((req, res, next) => {
-            res.setHeader('Cache-Control', 'no-cache, no-store');
-            next();
-        });
     };
 
     /**

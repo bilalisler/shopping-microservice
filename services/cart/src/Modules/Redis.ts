@@ -1,27 +1,15 @@
-import {createClient} from 'redis';
-import {RedisClientType as _RedisClientType} from "@redis/client/dist/lib/client";
+import {Client} from "redis-om";
 
-class Redis {
-    client: _RedisClientType
+/**
+ * Cluster Doc: https://redis.io/docs/connect/clients/nodejs/#connect
+ * Redis OM: https://redis.io/docs/connect/clients/om-clients/stack-node/
+ */
+export default class Redis {
+    static client: any
 
-    public init = async () => {
-        this.client = createClient()
-
-        this.client.on('error', err => console.error('Redis Client Error', err))
-        this.client.on('connect', () => console.info('Redis connected'))
-        this.client.on('ready', () => console.info('Redis ready!'))
-
-        await this.client.connect()
-    }
-
-    public set = (key: string, val: any) => {
-        return this.client.set(key, val)
-    }
-
-    public get = async (key: string) => {
-        return await this.client.get(key)
-        //.then((resp) => console.log('resp:', resp)).catch((err) => console.error('err:', err))
+    public static async init() {
+        const client = new Client()
+        await client.open('redis://localhost:6379')
+        this.client = client
     }
 }
-
-export default new Redis

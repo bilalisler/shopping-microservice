@@ -1,21 +1,17 @@
-import {Request, Response, Router} from 'express';
+import {Router} from 'express';
 import validateBody from "../Middleware/RequestValidator";
 import CommentController from '../Controllers/CartController';
-import AddToCartRequest from "../Requests/AddToCartRequest";
-import UpdateToCartRequest from "../Requests/UpdateToCartRequest";
-import DeleteFromCartRequest from "../Requests/DeleteFromCartRequest";
+import AddItemRequest from "../Requests/AddItemRequest";
+import UpdateItemRequest from "../Requests/UpdateItemRequest";
+import DeleteItemRequest from "../Requests/DeleteItemRequest";
+import userChecker from "../Middleware/UserChecker";
 
 const router = Router();
 
-
-router.get('/health/check', async function (req: Request, res: Response) {
-    res.json({
-        "status": "Success Cart"
-    })
-})
-router.get('/', CommentController.show);
-router.post('/', validateBody(AddToCartRequest), CommentController.add);
-router.put('/', validateBody(UpdateToCartRequest), CommentController.update);
-router.delete('/', validateBody(DeleteFromCartRequest), CommentController.delete);
+router.get('/', userChecker, CommentController.showCart);
+router.post('/', userChecker, validateBody(AddItemRequest), CommentController.addItem);
+router.put('/', userChecker, validateBody(UpdateItemRequest), CommentController.updateItem);
+router.delete('/', userChecker, validateBody(DeleteItemRequest), CommentController.deleteItem);
+router.delete('/clear', userChecker, validateBody(DeleteItemRequest), CommentController.clearCart);
 
 export default router;

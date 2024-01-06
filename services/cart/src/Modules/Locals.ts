@@ -6,7 +6,6 @@ class Locals {
         dotenv.config({path: path.join(__dirname, '../../.env')});
 
         const environment = process.env.ENVIRONMENT || 'development';
-        const jwtSecret = process.env.JWT_SECRET || 'SECRET';
         const appHost = process.env.APP_HOST || 'localhost';
         const appPort = process.env.APP_PORT || 3003;
         const rabbitMQHost = process.env.RABBITMQ_HOST || 'localhost';
@@ -19,7 +18,6 @@ class Locals {
 
         return {
             environment,
-            jwtSecret,
             appHost,
             appPort,
             rabbitMQHost,

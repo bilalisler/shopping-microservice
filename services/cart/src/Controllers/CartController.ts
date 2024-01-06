@@ -1,35 +1,43 @@
 import {Request, Response} from "express";
-import CommentService from "../Services/CartService";
+import CartService from "../Services/CartService";
 
 class CartController {
-    public async show(req: Request, res: Response) {
-        await CommentService.all()
-        res.json()
+    public async showCart(req: Request, res: Response) {
+        const userId: string = req.header('x-user-id') ?? ""
+
+        res.json(
+            await CartService.getCart(
+                userId
+            )
+        )
     }
 
-    public async add(req: Request, res: Response) {
+    public async addItem(req: Request, res: Response) {
+        const userId: string = req.get('x-user-id') ?? ""
+        await CartService.addItem(userId, req.body)
 
-        let cart = await CommentService.get("6591623d9f36f52a29f9beb1")
-
-        console.log('data:', cart);
-
-        // await CommentService.add(
-        //     req.body
-        // )
         res.json({"message": "success"})
     }
 
-    public async update(req: Request, res: Response) {
-        await CommentService.update(
-            req.body
-        )
+
+    public async updateItem(req: Request, res: Response) {
+        const userId: string = req.get('x-user-id') ?? ""
+        await CartService.updateItemQuantity(userId, req.body)
+
         res.json({"message": "success"})
     }
 
-    public async delete(req: Request, res: Response) {
-        await CommentService.delete(
-            req.body
-        )
+    public async deleteItem(req: Request, res: Response) {
+        const userId: string = req.get('x-user-id') ?? ""
+        await CartService.deleteItem(userId, req.body)
+
+        res.json({"message": "success"})
+    }
+
+    public async clearCart(req: Request, res: Response) {
+        const userId: string = req.get('x-user-id') ?? ""
+        await CartService.clearCart(userId)
+
         res.json({"message": "success"})
     }
 }

@@ -1,6 +1,5 @@
 import dotenv from "dotenv";
 import * as path from "path";
-import Database from "./Database";
 import Redis from "./Redis";
 import Express from "./Express";
 import Queue from "./Queue";
@@ -12,10 +11,6 @@ class App {
 
     public loadQueue() {
         Queue.init()
-    }
-
-    public loadDatabase() {
-        Database.init()
     }
 
     public async loadRedis() {

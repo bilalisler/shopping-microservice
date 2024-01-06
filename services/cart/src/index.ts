@@ -14,12 +14,7 @@ import App from "./Modules/App";
     /**
      * Run the Redis pool
      */
-    // await App.loadRedis();
-
-    /**
-     * Run the Database pool
-     */
-    App.loadDatabase();
+    await App.loadRedis();
 
     /**
      * Run the Server on Clusters
