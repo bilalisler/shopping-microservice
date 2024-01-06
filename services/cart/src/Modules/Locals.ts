@@ -11,10 +11,10 @@ class Locals {
         const rabbitMQHost = process.env.RABBITMQ_HOST || 'localhost';
         const rabbitMQPort = process.env.RABBITMQ_PORT || 5672;
         const rabbitMQUIPort = process.env.RABBITMQ_UI_PORT || 15672;
-        const mongoHost = process.env.MONGO_HOST || 'localhost';
-        const mongoPort = process.env.MONGO_PORT || 27017;
-        const mongoUIPort = process.env.MONGO_UI_PORT || 8081;
-        const mongoDBName = process.env.MONGO_DBNAME || 'comment_id';
+        const redisHost = process.env.REDIS_HOST || 'localhost';
+        const redisPort = process.env.REDIS_PORT || 27017;
+        const redisUIPort = process.env.REDIS_UI_PORT || 8081;
+        const redisDBName = process.env.REDIS_DBNAME || 'comment_id';
 
         return {
             environment,
@@ -23,10 +23,10 @@ class Locals {
             rabbitMQHost,
             rabbitMQPort,
             rabbitMQUIPort,
-            mongoHost,
-            mongoPort,
-            mongoUIPort,
-            mongoDBName
+            redisHost,
+            redisPort,
+            redisUIPort,
+            redisDBName
         }
     }
 }

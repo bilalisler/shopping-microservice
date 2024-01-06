@@ -2,7 +2,6 @@ import {IAddItemRequest} from "../Requests/AddItemRequest";
 import {IUpdateItemRequest} from "../Requests/UpdateItemRequest";
 import {IDeleteItemRequest} from "../Requests/DeleteItemRequest";
 import Redis from "../Modules/Redis";
-import {cartSchema} from "../Entity/Cart";
 
 export interface ICartService {
     getCart: (userId: string) => any;
@@ -16,7 +15,7 @@ export interface ICartService {
 
 class CartService implements ICartService {
     public async getCart(userId: string): Promise<any> {
-        const cartRepository = Redis.client.fetchRepository(cartSchema)
+        const cartRepository = Redis.repository()
         await cartRepository.createIndex()
 
         return await cartRepository
@@ -28,7 +27,7 @@ class CartService implements ICartService {
     }
 
     public async getItem(userId: string, productId: string): Promise<any> {
-        const cartRepository = Redis.client.fetchRepository(cartSchema)
+        const cartRepository = Redis.repository()
 
         return await cartRepository
             .search()
@@ -41,42 +40,42 @@ class CartService implements ICartService {
     }
 
     public async addItem(userId: string, item: IAddItemRequest): Promise<string> {
-        const cartRepository = Redis.client.fetchRepository(cartSchema)
+        const cartRepository = Redis.repository()
 
-        let cart = await this.getItem(userId, item.product_id)
+        let cartItem = await this.getItem(userId, item.product_id)
 
-        if (!cart) {
-            cart = await cartRepository.createEntity()
-            cart.user_id = userId
-            cart.expired = false
-            cart.created_at = new Date()
+        if (!cartItem) {
+            cartItem = await cartRepository.createEntity()
+            cartItem.user_id = userId
+            cartItem.expired = false
+            cartItem.created_at = new Date()
         }
-        cart.product_id = item.product_id
-        cart.quantity = item.quantity
+        cartItem.product_id = item.product_id
+        cartItem.quantity = item.quantity
 
-        return await cartRepository.save(cart) // return entity id
+        return await cartRepository.save(cartItem) // return entity id
     }
 
     public async updateItemQuantity(userId: string, item: IUpdateItemRequest): Promise<string> {
-        const cartRepository = Redis.client.fetchRepository(cartSchema)
+        const cartRepository = Redis.repository()
 
-        let cart = await this.getItem(userId, item.product_id)
+        let cartItem = await this.getItem(userId, item.product_id)
 
-        if (!cart) {
-            cart = await cartRepository.createEntity()
-            cart.user_id = userId
-            cart.expired = false
-            cart.product_id = item.product_id
-            cart.created_at = new Date()
+        if (!cartItem) {
+            cartItem = await cartRepository.createEntity()
+            cartItem.user_id = userId
+            cartItem.expired = false
+            cartItem.product_id = item.product_id
+            cartItem.created_at = new Date()
         }
-        cart.updated_at = new Date()
-        cart.quantity = item.quantity
+        cartItem.updated_at = new Date()
+        cartItem.quantity = item.quantity
 
-        return await cartRepository.save({...cart, ...item}) // return entity id
+        return await cartRepository.save({...cartItem, ...item}) // return entity id
     }
 
     public async deleteItem(userId: string, request: IDeleteItemRequest): Promise<void> {
-        const cartRepository = Redis.client.fetchRepository(cartSchema)
+        const cartRepository = Redis.repository()
 
         let item = await this.getItem(userId, request.product_id)
 
@@ -84,7 +83,7 @@ class CartService implements ICartService {
     }
 
     public async clearCart(userId: string): Promise<void> {
-        const cartRepository = Redis.client.fetchRepository(cartSchema)
+        const cartRepository = Redis.repository()
 
         await cartRepository
             .search()
@@ -92,13 +91,6 @@ class CartService implements ICartService {
             .equals(userId)
             .return
             .remove()
-
-        // const items = this.getCart(userId);
-        //
-        // for (const [_, item] of Object.entries(items)) {
-        //     const cartRepository = Redis.client.fetchRepository(cartSchema)
-        //     await cartRepository.remove(item.entityId)
-        // }
     }
 }
 

@@ -12,6 +12,6 @@ router.get('/', userChecker, CommentController.showCart);
 router.post('/', userChecker, validateBody(AddItemRequest), CommentController.addItem);
 router.put('/', userChecker, validateBody(UpdateItemRequest), CommentController.updateItem);
 router.delete('/', userChecker, validateBody(DeleteItemRequest), CommentController.deleteItem);
-router.delete('/clear', userChecker, validateBody(DeleteItemRequest), CommentController.clearCart);
+router.delete('/clear', userChecker, CommentController.clearCart);
 
 export default router;

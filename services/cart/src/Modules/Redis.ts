@@ -1,4 +1,6 @@
 import {Client} from "redis-om";
+import {cartSchema} from "../Entity/Cart";
+import Locals from "./Locals";
 
 /**
  * Cluster Doc: https://redis.io/docs/connect/clients/nodejs/#connect
@@ -9,7 +11,16 @@ export default class Redis {
 
     public static async init() {
         const client = new Client()
-        await client.open('redis://localhost:6379')
+        await client.open(`redis://${Locals.config().redisHost}:${Locals.config().redisPort}`)
         this.client = client
+        await Redis.createIndex()
+    }
+
+    public static repository() {
+        return Redis.client.fetchRepository(cartSchema)
+    }
+
+    public static async createIndex() {
+        await Redis.repository().createIndex()
     }
 }
