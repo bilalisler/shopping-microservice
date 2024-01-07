@@ -8,46 +8,41 @@ class Express {
     /**
      * Create the express object
      */
-    public express: Application;
-
-    /**
-     * Initializes the express server
-     */
-    constructor() {
-        this.express = express();
-
-        this.mountMiddlewares();
-        this.mountErrorHandler();
-        this.mountRoutes();
-    }
+    public static express: Application;
 
     /**
      * Registering API Routes
      */
-    private mountRoutes = () => {
-        this.express.use(apiRouter)
-        this.express.use(healthRouter)
+    private static mountRoutes = () => {
+        Express.express.use(apiRouter())
+        Express.express.use(healthRouter())
     };
 
 
     /**
      * Registering Exception / Error Handlers
      */
-    private mountErrorHandler = () => {
-        this.express.use(ExceptionHandler.errorHandler);
+    private static mountErrorHandler = () => {
+        Express.express.use(ExceptionHandler.errorHandler);
     };
 
     /**
      * Registering App Middlewares
      */
-    private mountMiddlewares = () => {
-        this.express.use(express.json())
+    private static mountMiddlewares = () => {
+        Express.express.use(express.json())
     };
 
     /**
      * Starting Server
      */
-    public init = () => {
+    public static init() {
+        Express.express = express();
+
+        Express.mountMiddlewares();
+        Express.mountErrorHandler();
+        Express.mountRoutes();
+
         let port = Locals.config().appPort
 
         this.express.listen(port, () => {
@@ -58,4 +53,4 @@ class Express {
     };
 }
 
-export default new Express
+export default Express
